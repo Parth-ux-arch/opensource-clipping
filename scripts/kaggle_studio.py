@@ -238,6 +238,10 @@ def setup_environment(env_dir: Path, root: Path = PROJECT_ROOT) -> None:
          "--index-url", "https://pypi.org/simple"],
         [python, "-m", "pip", "check"],
     )):
+        if stage == "dependencies":
+            print("⏳ Installing AI dependencies (PyTorch 2.5GB, MediaPipe, Whisper, Pyannote, Ultralytics)... This takes ~5-8 minutes. Please wait...", flush=True)
+        else:
+            print(f"Running {stage}...", flush=True)
         with logged_stage(stage):
             subprocess.run(command, cwd=root, env=environment, check=True)
     with logged_stage("deno"):
