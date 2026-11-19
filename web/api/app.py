@@ -55,18 +55,25 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS — allow frontend dev server
+# CORS — configure allowed origins
+default_origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5175",
+    "https://naufalrizqullah.github.io",
+    "https://parth-ux-arch.github.io",
+]
+env_origins = [o.strip() for o in os.getenv("OSC_ALLOWED_ORIGINS", "").split(",") if o.strip()]
+for origin in env_origins:
+    if origin not in default_origins:
+        default_origins.append(origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://localhost:5175",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-        "http://127.0.0.1:5175",
-        "https://naufalrizqullah.github.io",
-    ],
+    allow_origins=default_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
