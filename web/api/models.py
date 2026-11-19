@@ -115,7 +115,7 @@ class JobCreateRequest(BaseModel):
 
     # AI
     ai_provider: AIProvider = AIProvider.GEMINI
-    gemini_model: str = "gemini-3-flash-preview"
+    gemini_model: str = "gemini-3.8-flash"
     vllm_model: Optional[str] = Field(
         None, min_length=1, max_length=256, pattern=r"^[A-Za-z0-9._:/@+-]+$",
         description="Served vLLM model or alias; omitted uses the operator default",
